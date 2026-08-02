@@ -5,7 +5,7 @@ import { applyTrainDelay, composeScenario } from "./scenario";
 import { forecastSeriesSchema, scenarioInputSchema } from "./schemas";
 
 const EVENTS_GBK = FORECAST_EVENTS.filter((e) => e.id === "EV-01");
-const EVENTS_NONE = [];
+const EVENTS_NONE: typeof EVENTS_GBK = [];
 
 describe("fixture-model", () => {
   it("generates 48 deterministic points within 0-120", () => {

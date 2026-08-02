@@ -10,7 +10,7 @@ export const surveySubmissionSchema = z.object({
   sidewalk_width_m: z.number().positive("Sidewalk width must be greater than 0"),
   obstacle_type: z.enum(["vendor", "construction", "angkot_queue", "parking", "other", "none"]),
   notes: z.string().optional().nullable(),
-  geometry: z.record(z.unknown()).optional().nullable(),
+  geometry: z.record(z.string(), z.unknown()).optional().nullable(),
 });
 
 export async function GET() {
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { status: "error", message: "Validation error", errors: error.errors },
+        { status: "error", message: "Validation error", errors: error.issues },
         { status: 400 }
       );
     }
