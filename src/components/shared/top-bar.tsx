@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useSyncExternalStore } from "react";
 import { Search, Bell, MapPin, Loader2, Sun, Moon, ChevronDown } from "lucide-react";
 import { useStationUIStore } from "@/features/stations/store/station-ui-store";
 import { getStationRepository } from "@/infrastructure/mock/provider-registry";
@@ -17,7 +17,6 @@ export function TopBar({ showSearch = true }: TopBarProps) {
   const { flyToStation } = useStationUIStore();
   const { theme, toggleTheme } = useThemeStore();
 
-  const [mounted, setMounted] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<GeoJSONFeature<StationNode>[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,9 +24,12 @@ export function TopBar({ showSearch = true }: TopBarProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // true on client (after hydration), false during SSR — prevents hydration mismatch
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   // Debounced search — fires 350 ms after the user stops typing
   useEffect(() => {
