@@ -27,6 +27,6 @@ export type AttributeValueInput = z.infer<ReturnType<typeof attributeValueSchema
 export function validateAttributeValue(
   key: AiAttributeKey,
   value: number,
-): z.SafeParseReturnType<{ value: number }, { value: number }> {
+) {
   return attributeValueSchema(key).safeParse({ value });
 }
