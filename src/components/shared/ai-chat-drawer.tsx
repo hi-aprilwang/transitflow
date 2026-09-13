@@ -13,6 +13,8 @@ import {
   User,
   ChevronDown,
   ChevronUp,
+  Maximize2,
+  Minimize2,
 } from "lucide-react";
 import { useChatStore } from "@/features/chat/store/chat-store";
 import type { ChatMessage } from "@/features/chat/types";
@@ -156,6 +158,7 @@ export function AiChatDrawer() {
   } = useChatStore();
 
   const [input, setInput] = useState("");
+  const [isMaximized, setIsMaximized] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -210,7 +213,11 @@ export function AiChatDrawer() {
       {isOpen && (
         <aside
           aria-label="TransitFlow AI Spatial Assistant"
-          className="fixed bottom-4 right-4 z-50 w-[440px] max-w-[calc(100vw-2rem)] h-[620px] max-h-[calc(100vh-2rem)] flex flex-col bg-white/95 dark:bg-[#0c101c]/95 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 rounded-3xl shadow-2xl overflow-hidden transition-all duration-300 animate-in fade-in zoom-in-95"
+          className={`fixed right-3 sm:right-4 z-50 flex flex-col bg-white/95 dark:bg-[#0c101c]/95 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 shadow-2xl overflow-hidden transition-all duration-300 animate-in fade-in zoom-in-95 ${
+            isMaximized
+              ? "top-2 bottom-2 h-[calc(100vh-1rem)] w-[680px] max-w-[calc(100vw-1.5rem)] sm:max-w-[calc(100vw-2rem)] rounded-2xl md:rounded-3xl"
+              : "bottom-4 h-[620px] max-h-[calc(100vh-2rem)] w-[440px] max-w-[calc(100vw-2rem)] rounded-3xl"
+          }`}
         >
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-[#101726]/80 shrink-0">
@@ -243,6 +250,15 @@ export function AiChatDrawer() {
                 title="Reset conversation"
               >
                 <RotateCcw size={16} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsMaximized((prev) => !prev)}
+                className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-white/10 rounded-xl transition-colors"
+                title={isMaximized ? "Restore default window height" : "Maximize vertical window"}
+                aria-label={isMaximized ? "Restore default window height" : "Maximize vertical window"}
+              >
+                {isMaximized ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
               </button>
               <button
                 type="button"
