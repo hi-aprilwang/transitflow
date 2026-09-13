@@ -104,7 +104,9 @@ export const useChatStore = create<ChatState>((set, get) => ({
       });
 
       if (!res.ok) {
-        throw new Error(`Chat API error (${res.status})`);
+        const errorData = await res.json().catch(() => ({}));
+        const message = errorData.message || `Chat API error (${res.status})`;
+        throw new Error(message);
       }
 
       const data = await res.json();
@@ -133,7 +135,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
           {
             id: `error-${Date.now()}`,
             role: "assistant",
-            content: `⚠️ **Connection Error**: ${errorMessage}. Please verify your network connection or try again.`,
+            content: `❌ **API Error**: ${errorMessage}`,
             timestamp: Date.now(),
           },
         ],
