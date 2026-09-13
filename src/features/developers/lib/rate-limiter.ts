@@ -19,7 +19,9 @@ export function tryConsume(bucket: TokenBucket, now: number, cost = 1): boolean 
 }
 
 export function retryAfterSec(bucket: TokenBucket, now: number): number {
-  if (bucket.tokens >= 1) return 0;
-  const deficit = 1 - bucket.tokens;
+  const elapsed = Math.max(0, now - bucket.lastRefill) / 1_000;
+  const currentTokens = Math.min(bucket.capacity, bucket.tokens + elapsed * bucket.refillPerSec);
+  if (currentTokens >= 1) return 0;
+  const deficit = 1 - currentTokens;
   return Math.ceil(deficit / Math.max(0.001, bucket.refillPerSec));
 }

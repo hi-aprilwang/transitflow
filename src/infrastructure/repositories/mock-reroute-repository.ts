@@ -37,7 +37,6 @@ class MockRerouteRepository implements RerouteRepository {
 
   tick(now: number): void {
     this.current = now;
-    const elapsed = (now - this.startedAt) / 1_000;
     // deterministic seeded floods: #3 at t>=300s (UP-3, 30cm), #4 at t>=390s (UP-4, 41cm)
     this.applySeededFlood("UP-3", 30, 0.94, 300);
     this.applySeededFlood("UP-4", 41, 0.96, 390);

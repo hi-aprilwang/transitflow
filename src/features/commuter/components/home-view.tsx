@@ -8,7 +8,7 @@ import { COMMUTER_HUBS } from "../fixtures/portal-fixtures";
 import { cn } from "@/lib/utils";
 
 export function HomeView() {
-  const { lang, locationState, resolvedHubId, distanceKm, hub, notifications } = usePortalStore();
+  const { lang, locationState, distanceKm, hub, notifications } = usePortalStore();
   const safePath = useSafePath();
   const [manualOpen, setManualOpen] = useState(false);
   const latestAlert = notifications[0];

@@ -1,4 +1,4 @@
-import type { KioskSite, WalkwayCorridor } from "../types";
+import type { WalkwayCorridor } from "../types";
 import { distToSegmentM } from "@/features/buffer-allocator/lib/geometry-validation";
 
 export const MIN_CLEAR_WALKWAY_M = 2.5;

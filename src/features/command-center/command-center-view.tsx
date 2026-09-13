@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { AppShell } from "@/components/shared/app-shell";
 import { useCCDriver } from "./hooks/use-cc-driver";
 import { useCCStore } from "./store/cc-store";
@@ -15,7 +15,6 @@ export function CommandCenterView({ screenLabel = "A" }: { screenLabel?: string 
   const selectedIncidentId = useCCStore((s) => s.selectedIncidentId);
   const incidents = useCCStore((s) => s.incidents);
   const selectIncident = useCCStore((s) => s.selectIncident);
-  const [mapReady, setMapReady] = useState(false);
 
   const selectedIncident = incidents.find((i) => i.id === selectedIncidentId && !i.resolved) ?? null;
 
@@ -30,7 +29,7 @@ export function CommandCenterView({ screenLabel = "A" }: { screenLabel?: string 
         <KpiStrip />
 
         <div className="flex-1 relative min-h-0">
-          <CCIncidentMap onMapReady={() => setMapReady(true)} onIncidentClick={handleIncidentClick} />
+          <CCIncidentMap onMapReady={() => {}} onIncidentClick={handleIncidentClick} />
 
           {/* Dispatch panel — right side */}
           <div className="absolute top-4 right-4 z-10">

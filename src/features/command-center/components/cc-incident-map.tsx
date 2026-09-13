@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import { Map as MapLibreMap, Marker } from "maplibre-gl";
 import { MapCanvas } from "@/components/shared/map-canvas";
 import { useCCStore } from "../store/cc-store";
-import { AGENCIES } from "../types";
 import { DEMO_STATIONS } from "@/infrastructure/mock/fixtures/stations";
 
 const AGENCY_COLORS: Record<string, string> = {

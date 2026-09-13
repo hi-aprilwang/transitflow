@@ -13,7 +13,7 @@ import { toast } from "sonner";
 
 function KioskMap({ onMapReady }: { onMapReady: (map: MapLibreMap) => void }) {
   const [map, setMap] = useState<MapLibreMap | null>(null);
-  const { kiosks, selectedKioskId, setSelected, placeKiosk, moveKiosk, sesOn, poisOn, violation, setViolation } = useKioskStore();
+  const { kiosks, selectedKioskId, setSelected, placeKiosk, moveKiosk, sesOn, poisOn, setViolation } = useKioskStore();
   const dragRef = useRef<{ id: string } | null>(null);
 
   useEffect(() => {
@@ -123,7 +123,6 @@ export function KioskView() {
     issuePermit,
     setProposalOpen,
   } = useKioskStore();
-  const [mapReady, setMapReady] = useState(false);
 
   const selected = kiosks.find((k) => k.id === selectedKioskId) ?? null;
 

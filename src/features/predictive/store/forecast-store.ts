@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ForecastEvent, ForecastSeries, ScenarioInput } from "../lib/fixture-model";
+import type { ForecastSeries } from "../lib/fixture-model";
 
 interface ForecastState {
   elapsedHours: number;
