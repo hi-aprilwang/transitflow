@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { marked } from "marked";
 import {
   Sparkles,
   X,
@@ -10,7 +11,6 @@ import {
   Check,
   Bot,
   User,
-  ShieldCheck,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
@@ -21,6 +21,15 @@ function MessageBubble({ message }: { message: ChatMessage }) {
   const [copied, setCopied] = useState(false);
   const [showReasoning, setShowReasoning] = useState(false);
   const isUser = message.role === "user";
+
+  const parsedHtml = useMemo(() => {
+    if (isUser) return "";
+    try {
+      return marked.parse(message.content, { gfm: true, breaks: true }) as string;
+    } catch {
+      return message.content;
+    }
+  }, [message.content, isUser]);
 
   const handleCopy = async () => {
     try {
@@ -77,33 +86,28 @@ function MessageBubble({ message }: { message: ChatMessage }) {
           </div>
         )}
 
-        {/* Formatted Message Body */}
-        <div className="whitespace-pre-wrap font-sans space-y-2">
-          {message.content.split("\n\n").map((paragraph, idx) => {
-            // Simple markdown-style rendering for headers and bullets
-            if (paragraph.startsWith("### ")) {
-              return (
-                <h4
-                  key={idx}
-                  className="font-bold text-base text-slate-900 dark:text-white pt-1"
-                >
-                  {paragraph.replace("### ", "")}
-                </h4>
-              );
-            }
-            if (paragraph.startsWith("> ")) {
-              return (
-                <div
-                  key={idx}
-                  className="pl-3 border-l-2 border-emerald-500 text-slate-600 dark:text-slate-300 italic"
-                >
-                  {paragraph.replace("> ", "")}
-                </div>
-              );
-            }
-            return <p key={idx}>{paragraph}</p>;
-          })}
-        </div>
+        {/* Message Body with full Markdown Parsing */}
+        {isUser ? (
+          <div className="whitespace-pre-wrap font-sans">{message.content}</div>
+        ) : (
+          <div
+            className="chat-markdown font-sans text-sm leading-relaxed space-y-2.5 text-slate-800 dark:text-slate-100
+              [&_h1]:text-base [&_h1]:font-bold [&_h1]:text-slate-900 dark:[&_h1]:text-white [&_h1]:mt-3 [&_h1]:mb-1.5
+              [&_h2]:text-base [&_h2]:font-bold [&_h2]:text-slate-900 dark:[&_h2]:text-white [&_h2]:mt-2.5 [&_h2]:mb-1
+              [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-slate-900 dark:[&_h3]:text-white [&_h3]:mt-2 [&_h3]:mb-1
+              [&_h4]:text-sm [&_h4]:font-bold [&_h4]:text-slate-900 dark:[&_h4]:text-white
+              [&_p]:my-1.5 [&_p]:leading-relaxed
+              [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:my-1.5 [&_ul]:space-y-1
+              [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:my-1.5 [&_ol]:space-y-1
+              [&_li]:my-0.5 [&_li]:leading-relaxed
+              [&_strong]:font-semibold [&_strong]:text-slate-900 dark:[&_strong]:text-white
+              [&_blockquote]:border-l-2 [&_blockquote]:border-emerald-500 [&_blockquote]:pl-3 [&_blockquote]:italic [&_blockquote]:my-2 [&_blockquote]:text-slate-600 dark:[&_blockquote]:text-slate-300
+              [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:bg-slate-200/70 dark:[&_code]:bg-slate-800 [&_code]:rounded-md [&_code]:font-mono [&_code]:text-sm
+              [&_pre]:p-3 [&_pre]:bg-slate-900 [&_pre]:text-slate-100 [&_pre]:rounded-xl [&_pre]:overflow-x-auto [&_pre]:my-2
+              [&_table]:w-full [&_table]:my-2 [&_table]:border-collapse [&_th]:border [&_th]:border-slate-300 dark:[&_th]:border-slate-700 [&_th]:p-1.5 [&_th]:text-left [&_th]:font-semibold [&_td]:border [&_td]:border-slate-300 dark:[&_td]:border-slate-700 [&_td]:p-1.5 [&_hr]:my-3 [&_hr]:border-slate-200 dark:[&_hr]:border-white/10"
+            dangerouslySetInnerHTML={{ __html: parsedHtml }}
+          />
+        )}
 
         {/* Copy button on hover */}
         {!isUser && (
@@ -228,8 +232,8 @@ export function AiChatDrawer() {
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-                  <ShieldCheck size={13} className="text-blue-500" />
-                  <span>Guardrail active · Killswitch 25 Sept 2026</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span>Spatial Intelligence · Jakarta TOD Network</span>
                 </div>
               </div>
             </div>

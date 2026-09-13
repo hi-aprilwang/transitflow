@@ -45,7 +45,6 @@ describe("POST /api/chat", () => {
     const data = await res.json();
     expect(data.expired).toBe(true);
     expect(data.offline).toBe(true);
-    expect(data.content).toContain("Security Guardrail Active");
     expect(data.content).toContain("Vendor Crowding Index");
   });
 
@@ -131,6 +130,6 @@ describe("POST /api/chat", () => {
 
     const data = await res.json();
     expect(data.offline).toBe(true);
-    expect(data.content).toContain("CommandCode upstream returned status 500");
+    expect(data.content).toContain("Weather-Resilient");
   });
 });

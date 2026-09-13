@@ -104,7 +104,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: outgoingMessages,
-          max_tokens: 800,
+          max_tokens: 3000,
           temperature: 0.7,
         }),
       });
