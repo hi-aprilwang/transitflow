@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { APP_VERSION } from "@/lib/version";
 
 const navItems = [
   { label: "DASHBOARD", href: "/dashboard", icon: LayoutDashboard },
@@ -134,7 +135,7 @@ export function Sidebar() {
                   Operator Admin
                 </div>
                 <div className="font-mono text-[9px] text-slate-400 dark:text-slate-500 uppercase tracking-[0.15em]">
-                  Auth · v1.2.0
+                  Auth · v{APP_VERSION}
                 </div>
               </div>
               <button className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">

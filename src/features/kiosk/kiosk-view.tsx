@@ -161,7 +161,7 @@ export function KioskView() {
         </div>
 
         <div className="flex-1 relative min-h-0">
-          <KioskMap onMapReady={() => setMapReady(true)} />
+          <KioskMap onMapReady={() => {}} />
 
           {violation && (
             <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 px-3 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-sm font-semibold glow-crimson">
