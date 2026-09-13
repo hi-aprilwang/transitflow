@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Sidebar } from "./sidebar";
 import { TopBar } from "./top-bar";
+import { AiChatDrawer } from "./ai-chat-drawer";
 import { useThemeStore } from "@/lib/theme-store";
 
 interface AppShellProps {
@@ -29,6 +30,7 @@ export function AppShell({ children, showSearch = true }: AppShellProps) {
         <TopBar showSearch={showSearch} />
         <main className="flex-1 relative overflow-hidden">{children}</main>
       </div>
+      <AiChatDrawer />
     </div>
   );
 }

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef, useSyncExternalStore } from "react";
-import { Search, Bell, MapPin, Loader2, Sun, Moon, ChevronDown } from "lucide-react";
+import { Search, Bell, MapPin, Loader2, Sun, Moon, ChevronDown, Sparkles } from "lucide-react";
 import { useStationUIStore } from "@/features/stations/store/station-ui-store";
 import { getStationRepository } from "@/infrastructure/mock/provider-registry";
 import { useThemeStore } from "@/lib/theme-store";
+import { useChatStore } from "@/features/chat/store/chat-store";
 import { DemoBadge } from "./demo-badge";
 import type { StationNode } from "@/entities/station";
 import type { GeoJSONFeature } from "@/entities/geojson";
@@ -16,6 +17,7 @@ interface TopBarProps {
 export function TopBar({ showSearch = true }: TopBarProps) {
   const { flyToStation } = useStationUIStore();
   const { theme, toggleTheme } = useThemeStore();
+  const toggleChat = useChatStore((s) => s.toggleOpen);
 
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<GeoJSONFeature<StationNode>[]>([]);
@@ -174,6 +176,18 @@ export function TopBar({ showSearch = true }: TopBarProps) {
 
       {/* Demo mode indicator */}
       <DemoBadge />
+
+      {/* AI Spatial Copilot Launcher */}
+      <button
+        type="button"
+        onClick={toggleChat}
+        className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-600/10 via-indigo-600/10 to-emerald-600/10 border border-blue-500/20 hover:border-emerald-500/40 text-slate-700 dark:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-white/10 active:scale-95 transition-all text-sm font-medium shadow-sm group"
+        title="Open AI Spatial Copilot"
+      >
+        <Sparkles size={14} className="text-emerald-500 group-hover:rotate-12 transition-transform" />
+        <span className="hidden sm:inline">AI Copilot</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+      </button>
 
       {/* Theme Toggle Button (mounted check prevents React SSR Hydration Mismatch) */}
       {mounted ? (

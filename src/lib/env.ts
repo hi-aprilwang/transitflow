@@ -17,6 +17,9 @@ const envSchema = z.object({
   NEXT_PUBLIC_DEMO_MODE: z.enum(["true", "false"]).default("false"),
   SUPABASE_URL: z.string().url().optional(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
+  COMMANDCODE_API_KEY: z.string().optional(),
+  COMMANDCODE_MODEL: z.string().default("deepseek/deepseek-v4.1-flash"),
+  COMMANDCODE_EXPIRY_DATE: z.string().default("2026-09-25T00:00:00+07:00"),
 });
 
 export const env = envSchema.parse({
@@ -31,4 +34,7 @@ export const env = envSchema.parse({
   NEXT_PUBLIC_DEMO_MODE: process.env.NEXT_PUBLIC_DEMO_MODE,
   SUPABASE_URL: process.env.SUPABASE_URL,
   SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+  COMMANDCODE_API_KEY: process.env.COMMANDCODE_API_KEY,
+  COMMANDCODE_MODEL: process.env.COMMANDCODE_MODEL,
+  COMMANDCODE_EXPIRY_DATE: process.env.COMMANDCODE_EXPIRY_DATE,
 });
