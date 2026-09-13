@@ -38,6 +38,46 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
       { key: "horizon", value: "48" },
     ],
   },
+  {
+    id: "mapid-basemap",
+    method: "GET",
+    path: "https://basemap.mapid.io/styles/street-2d-building/style.json",
+    description: "Official MAPID 2D vector building footprints & street styling",
+    exampleParams: [{ key: "key", value: "6a7d3894610fe054a12def2a" }],
+  },
+  {
+    id: "mapid-isochrone",
+    method: "GET",
+    path: "https://routing.mapid.io/isochrone",
+    description: "MAPID 15-minute pedestrian walk catchment polygon engine",
+    exampleParams: [
+      { key: "point", value: "-6.2008,106.8228" },
+      { key: "time_limit", value: "900" },
+      { key: "profile", value: "foot" },
+      { key: "key", value: "6a7d3894610fe054a12def2a" },
+    ],
+  },
+  {
+    id: "mapid-routing",
+    method: "POST",
+    path: "https://routing.mapid.io/",
+    description: "MAPID Graph pedestrian & vehicular routing engine",
+    exampleParams: [
+      { key: "profile", value: "foot" },
+      { key: "key", value: "6a7d3894610fe054a12def2a" },
+    ],
+  },
+  {
+    id: "mapid-search",
+    method: "GET",
+    path: "https://nominatim.mapid.io/search",
+    description: "MAPID Nominatim geocoding & address search service",
+    exampleParams: [
+      { key: "q", value: "Dukuh Atas" },
+      { key: "format", value: "json" },
+      { key: "key", value: "6a7d3894610fe054a12def2a" },
+    ],
+  },
 ];
 
 export function exitStatusGeoJson(exitId: string) {

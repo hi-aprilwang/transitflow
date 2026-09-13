@@ -8,6 +8,7 @@ import {
 } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { env } from "@/lib/env";
+import { getMapidBasemapUrl } from "@/lib/mapid/mapid-service";
 import { useThemeStore } from "@/lib/theme-store";
 import { useStationUIStore } from "@/features/stations/store/station-ui-store";
 
@@ -31,6 +32,17 @@ export function MapCanvas({ onMapReady, className = "" }: MapCanvasProps) {
 
   const theme = useThemeStore((s) => s.theme);
   const is3DMode = useStationUIStore((s) => s.is3DMode);
+  const mapidBasemap = useStationUIStore((s) => s.mapidBasemap);
+  const setMapidBasemap = useStationUIStore((s) => s.setMapidBasemap);
+
+  // Sync theme changes with MAPID basemaps
+  useEffect(() => {
+    if (theme === "dark" && (mapidBasemap === "street-2d" || mapidBasemap === "light")) {
+      setMapidBasemap("dark");
+    } else if (theme === "light" && mapidBasemap === "dark") {
+      setMapidBasemap("street-2d");
+    }
+  }, [theme, mapidBasemap, setMapidBasemap]);
 
   // Helper to toggle hillshade & 3D building fill-extrusions based on 2D/3D mode
   const apply2DFlatOr3DState = useCallback((map: MapLibreMap, is3D: boolean) => {
@@ -79,10 +91,9 @@ export function MapCanvas({ onMapReady, className = "" }: MapCanvasProps) {
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
-    const initialStyle =
-      theme === "dark"
-        ? env.NEXT_PUBLIC_MAPLIBRE_DARK_STYLE_URL
-        : env.NEXT_PUBLIC_MAPLIBRE_STYLE_URL;
+    const initialStyle = getMapidBasemapUrl(
+      theme === "dark" ? "dark" : is3DMode ? "street-3d" : mapidBasemap,
+    );
 
     try {
       const map = new MapLibreMap({
@@ -143,12 +154,9 @@ export function MapCanvas({ onMapReady, className = "" }: MapCanvasProps) {
 
   useEffect(() => {
     if (!mapRef.current) return;
-    const styleUrl =
-      theme === "dark"
-        ? env.NEXT_PUBLIC_MAPLIBRE_DARK_STYLE_URL
-        : env.NEXT_PUBLIC_MAPLIBRE_STYLE_URL;
-    mapRef.current.setStyle(styleUrl);
-  }, [theme]);
+    const styleUrl = getMapidBasemapUrl(mapidBasemap);
+    mapRef.current.setStyle(styleUrl, { diff: false });
+  }, [mapidBasemap]);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -158,6 +166,12 @@ export function MapCanvas({ onMapReady, className = "" }: MapCanvasProps) {
   return (
     <div className={`relative w-full h-full ${className}`}>
       <div ref={containerRef} className="w-full h-full" />
+      {/* MAPID Engine Status Pill */}
+      <div className="absolute bottom-2 right-3 pointer-events-none z-10 hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 dark:bg-[#0c1019]/90 backdrop-blur-md border border-slate-200/80 dark:border-white/10 shadow-md text-sm font-mono text-slate-600 dark:text-slate-300">
+        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        <span>MAPID Platform Live</span>
+      </div>
+
       {mapError && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-slate-900">
           <div className="text-center text-gray-500 dark:text-gray-400 p-8">

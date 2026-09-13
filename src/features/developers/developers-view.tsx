@@ -19,7 +19,26 @@ function ApiExplorer() {
     setRunning(true);
     const started = performance.now();
     try {
-      const res = await fetch(endpoint.path.replace("{id}", "dukuh-atas"));
+      let targetUrl = endpoint.path.replace("{id}", "dukuh-atas");
+      const init: RequestInit = { method: endpoint.method };
+
+      if (endpoint.method === "POST") {
+        init.headers = { "Content-Type": "application/json" };
+        init.body = JSON.stringify({
+          points: [
+            [106.8228, -6.2008],
+            [106.82, -6.19],
+          ],
+          profile: "foot",
+        });
+        targetUrl += "?key=6a7d3894610fe054a12def2a";
+      } else if (endpoint.exampleParams && endpoint.exampleParams.length > 0) {
+        const sp = new URLSearchParams();
+        endpoint.exampleParams.forEach((p) => sp.set(p.key, p.value));
+        targetUrl += (targetUrl.includes("?") ? "&" : "?") + sp.toString();
+      }
+
+      const res = await fetch(targetUrl, init);
       const body = await res.text();
       setLatencyMs(Math.round(performance.now() - started));
       setResponse(body);
