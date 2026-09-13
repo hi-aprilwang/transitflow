@@ -26,7 +26,7 @@ interface KioskState {
 
 const STARTED_AT = Date.now();
 
-export const useKioskStore = create<KioskState>((set, get) => ({
+export const useKioskStore = create<KioskState>((set) => ({
   kiosks: SEED_KIOSKS.map((k) => refreshKioskMetrics(k, 60)),
   permits: seedPermits(STARTED_AT),
   selectedKioskId: null,

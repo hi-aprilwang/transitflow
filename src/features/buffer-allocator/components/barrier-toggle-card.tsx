@@ -93,7 +93,7 @@ export function BarrierToggleCard({ barrierId }: { barrierId: string }) {
     >
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">
+          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate">
             {barrier.name}
           </p>
           {barrier.active && (

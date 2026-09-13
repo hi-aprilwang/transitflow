@@ -1,5 +1,4 @@
 import type {
-  DetourRoute,
   FloodPhoto,
   RadarCell,
   UnderpassFlood,

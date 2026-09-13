@@ -51,10 +51,6 @@ export function incidentLabel(i: Incident): string {
   return `${typeLabel[i.type]} · ${i.stationName} ${channelName("")}`;
 }
 
-export function incidentChannelName(i: Incident): string {
-  return channelName(""); // incidents carry station-level info
-}
-
 export function seedDispatches(now: number): Dispatch[] {
   return [
     {

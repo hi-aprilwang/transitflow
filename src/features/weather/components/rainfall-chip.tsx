@@ -27,7 +27,7 @@ export function RainfallChip() {
         )}
       >
         <Droplets size={13} className="shrink-0" />
-        <span className="font-mono text-xs font-bold tabular-nums">
+        <span className="font-mono text-sm font-bold tabular-nums">
           {rainfallMmHr} mm/hr
         </span>
         <span className="text-[10px] font-medium">

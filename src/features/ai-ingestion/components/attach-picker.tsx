@@ -41,7 +41,7 @@ export function AttachPicker({ extractionId }: { extractionId: string }) {
             setStationId(e.target.value);
             setChannelId("");
           }}
-          className="w-full bg-slate-100 dark:bg-[#141b2b] text-slate-900 dark:text-slate-100 text-xs rounded-xl px-3.5 py-2.5 border border-slate-200/80 dark:border-white/10 focus:outline-none focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/30 transition-all"
+          className="w-full bg-slate-100 dark:bg-[#141b2b] text-slate-900 dark:text-slate-100 text-sm rounded-xl px-3.5 py-2.5 border border-slate-200/80 dark:border-white/10 focus:outline-none focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/30 transition-all"
         >
           <option value="">Select station node…</option>
           {stations.map((f) => (
@@ -61,7 +61,7 @@ export function AttachPicker({ extractionId }: { extractionId: string }) {
           onChange={(e) => setChannelId(e.target.value)}
           disabled={!stationId}
           className={cn(
-            "w-full bg-slate-100 dark:bg-[#141b2b] text-slate-900 dark:text-slate-100 text-xs rounded-xl px-3.5 py-2.5 border border-slate-200/80 dark:border-white/10 focus:outline-none focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/30 transition-all",
+            "w-full bg-slate-100 dark:bg-[#141b2b] text-slate-900 dark:text-slate-100 text-sm rounded-xl px-3.5 py-2.5 border border-slate-200/80 dark:border-white/10 focus:outline-none focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/30 transition-all",
             !stationId && "opacity-50 cursor-not-allowed",
           )}
         >
@@ -81,7 +81,7 @@ export function AttachPicker({ extractionId }: { extractionId: string }) {
         onClick={confirm}
         disabled={!channelId || isPending}
         className={cn(
-          "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-white transition-all duration-150 shadow-md shadow-blue-600/25 border border-blue-400/30 active:scale-95",
+          "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-150 shadow-md shadow-blue-600/25 border border-blue-400/30 active:scale-95",
           !channelId || isPending ? "bg-blue-700 opacity-60 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-500",
         )}
       >

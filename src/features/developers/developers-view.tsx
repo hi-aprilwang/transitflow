@@ -6,7 +6,6 @@ import { useDevelopersStore } from "./store/developers-store";
 import { useDevDriver } from "./hooks/use-dev-driver";
 import { API_ENDPOINTS, HEALTH_CHECKS, latencySeries, uptimeSeries } from "./fixtures/dev-fixtures";
 import { cn } from "@/lib/utils";
-import { toast } from "sonner";
 
 function ApiExplorer() {
   const { selectedEndpointId, setSelectedEndpoint, consumeQuota, key } = useDevelopersStore();

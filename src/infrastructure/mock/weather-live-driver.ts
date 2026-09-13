@@ -1,4 +1,4 @@
-import type { DetourRoute, UnderpassFlood } from "@/entities/weather";
+import type { DetourRoute } from "@/entities/weather";
 import { RAIN_THRESHOLD_MMHR } from "@/entities/weather";
 import { mockWeatherRepository } from "@/infrastructure/repositories/mock-weather-repository";
 import { mockRerouteRepository } from "@/infrastructure/repositories/mock-reroute-repository";

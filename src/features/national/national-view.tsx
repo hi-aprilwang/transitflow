@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { AppShell } from "@/components/shared/app-shell";
 import { useNationalStore } from "./store/national-store";
 import { useNationalDriver } from "./hooks/use-national-driver";
@@ -43,7 +42,7 @@ function CitySwitcher() {
         type="button"
         onClick={() => setLocale(locale === "id" ? "en" : "id")}
         aria-pressed={locale === "en"}
-        className="px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200/60 dark:border-white/10 bg-slate-100 dark:bg-[#141b2b] text-slate-700 dark:text-slate-300"
+        className="px-3 py-1.5 rounded-xl text-sm font-bold border border-slate-200/60 dark:border-white/10 bg-slate-100 dark:bg-[#141b2b] text-slate-700 dark:text-slate-300"
       >
         {locale === "id" ? "EN" : "ID"}
       </button>

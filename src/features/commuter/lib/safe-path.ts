@@ -27,7 +27,6 @@ export function computeSafePath(doors: CommuterDoor[]): SafePathResult {
     return { recommended: best, deltas: [], allEqual: true };
   }
 
-  const second = sorted[1];
   const deltas: DoorDelta[] = sorted.map((door, i) => ({
     door,
     clearerPct:

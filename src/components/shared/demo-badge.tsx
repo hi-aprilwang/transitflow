@@ -8,7 +8,6 @@ import { toast } from "sonner";
 
 export function DemoBadge() {
   const demoOn = useDemoMode();
-  const toggle = useDemoModeStore((s) => s.toggle);
   const queryClient = useQueryClient();
 
   const handleToggle = () => {

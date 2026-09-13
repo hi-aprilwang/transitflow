@@ -73,7 +73,7 @@ export function CurbSlotPanel() {
       </h3>
 
       {active.length === 0 ? (
-        <p className="text-xs text-slate-500 dark:text-slate-400 py-3 text-center">
+        <p className="text-sm text-slate-500 dark:text-slate-400 py-3 text-center">
           No active ojek slots — the surge window is closed.
         </p>
       ) : (

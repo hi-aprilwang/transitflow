@@ -59,7 +59,7 @@ export function AudioTranscript({ audio }: { audio: AiAudioNote | null }) {
         ))}
       </div>
 
-      <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+      <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
         {audio.transcript_id}
       </p>
       <p className="text-[11px] text-slate-500 dark:text-slate-400 italic mt-1">

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { useWeatherUIStore } from "../store/weather-ui-store";
-import { NODE_COORDS, edgeCoordinates } from "@/infrastructure/mock/fixtures/weather-fixtures";
+import { edgeCoordinates } from "@/infrastructure/mock/fixtures/weather-fixtures";
 
 const CELL_SOURCE = "weather-radar-cells";
 const CELL_LAYER = "weather-radar-cell-fill";

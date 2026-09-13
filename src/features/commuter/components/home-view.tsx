@@ -8,7 +8,7 @@ import { COMMUTER_HUBS } from "../fixtures/portal-fixtures";
 import { cn } from "@/lib/utils";
 
 export function HomeView() {
-  const { lang, locationState, resolvedHubId, distanceKm, hub, notifications } = usePortalStore();
+  const { lang, locationState, distanceKm, hub, notifications } = usePortalStore();
   const safePath = useSafePath();
   const [manualOpen, setManualOpen] = useState(false);
   const latestAlert = notifications[0];
@@ -26,7 +26,7 @@ export function HomeView() {
     <div className="p-5 space-y-5">
       {/* Location card */}
       <section className="rounded-3xl border border-slate-200/80 dark:border-white/[0.08] bg-white dark:bg-[#141b2b]/80 p-5">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+        <p className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-2">
           {t("Lokasi Anda", "Your location")}
         </p>
 
@@ -106,7 +106,7 @@ export function HomeView() {
       {/* Safe-Path card */}
       {hub && safePath && (
         <section className="rounded-3xl border border-emerald-500/20 bg-emerald-500/5 p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">
+          <p className="text-sm font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">
             {t("Rekomendasi Pintu Aman", "Safe Exit Recommendation")}
           </p>
           <p className="text-[17px] font-bold text-slate-900 dark:text-white leading-snug">

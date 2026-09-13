@@ -33,7 +33,7 @@ export function CoordinatesInput({ value, onChange }: CoordinatesInputProps) {
           type="text"
           readOnly
           value={`${value.lat.toFixed(4)},  ${value.lng.toFixed(4)}`}
-          className="w-full bg-slate-100 dark:bg-[#141b2b] text-slate-900 dark:text-slate-100 font-mono text-xs rounded-xl px-3.5 py-2.5 pr-10 border border-slate-200/80 dark:border-white/10 focus:outline-none cursor-default shadow-inner"
+          className="w-full bg-slate-100 dark:bg-[#141b2b] text-slate-900 dark:text-slate-100 font-mono text-sm rounded-xl px-3.5 py-2.5 pr-10 border border-slate-200/80 dark:border-white/10 focus:outline-none cursor-default shadow-inner"
         />
         <button
           type="button"
