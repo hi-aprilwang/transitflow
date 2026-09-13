@@ -22,7 +22,6 @@ export interface FeatureCopy {
   summary: string;
   benefits: string[];
   steps: string[];
-  image?: string;
 }
 
 export interface GroupCopy {

@@ -29,22 +29,42 @@ import { cn } from "@/lib/utils";
 
 const FEATURE_META: Record<
   FeatureId,
-  { icon: typeof LayoutDashboard; href: string }
+  { icon: typeof LayoutDashboard; href: string; image: string }
 > = {
-  dashboard: { icon: LayoutDashboard, href: "/dashboard" },
-  commandCenter: { icon: MonitorPlay, href: "/command-center" },
-  cctv: { icon: Video, href: "/cctv" },
-  kiosks: { icon: Store, href: "/kiosks" },
-  survey: { icon: ClipboardList, href: "/survey" },
-  aiIngestion: { icon: Sparkles, href: "/ai-ingestion" },
-  portal: { icon: Smartphone, href: "/portal" },
-  national: { icon: Globe2, href: "/national" },
-  developers: { icon: Code2, href: "/developers" },
-  basemaps: { icon: Box, href: "/dashboard" },
-  catchments: { icon: Footprints, href: "/dashboard" },
-  routing: { icon: CloudRain, href: "/dashboard" },
-  search: { icon: Search, href: "/dashboard" },
-  tour: { icon: Trophy, href: "/dashboard" },
+  dashboard: {
+    icon: LayoutDashboard,
+    href: "/dashboard",
+    image: "/how-to-use/dashboard.png",
+  },
+  commandCenter: {
+    icon: MonitorPlay,
+    href: "/command-center",
+    image: "/how-to-use/command-center.png",
+  },
+  cctv: { icon: Video, href: "/cctv", image: "/how-to-use/cctv.png" },
+  kiosks: { icon: Store, href: "/kiosks", image: "/how-to-use/kiosks.png" },
+  survey: { icon: ClipboardList, href: "/survey", image: "/how-to-use/survey.png" },
+  aiIngestion: {
+    icon: Sparkles,
+    href: "/ai-ingestion",
+    image: "/how-to-use/ai-ingestion.png",
+  },
+  portal: { icon: Smartphone, href: "/portal", image: "/how-to-use/portal.png" },
+  national: { icon: Globe2, href: "/national", image: "/how-to-use/national.png" },
+  developers: {
+    icon: Code2,
+    href: "/developers",
+    image: "/how-to-use/developers.png",
+  },
+  basemaps: { icon: Box, href: "/dashboard", image: "/how-to-use/basemaps.png" },
+  catchments: {
+    icon: Footprints,
+    href: "/dashboard",
+    image: "/how-to-use/catchments.png",
+  },
+  routing: { icon: CloudRain, href: "/dashboard", image: "/how-to-use/routing.png" },
+  search: { icon: Search, href: "/dashboard", image: "/how-to-use/search.png" },
+  tour: { icon: Trophy, href: "/dashboard", image: "/how-to-use/tour.png" },
 };
 
 const MAP_TOOL_IDS: FeatureId[] = [
@@ -219,18 +239,16 @@ export function HowToUseView() {
                 </Link>
               </div>
 
-              {feature.image && (
-                <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50 dark:border-white/[0.08] dark:bg-[#0c1019]">
-                  <Image
-                    src={feature.image}
-                    alt={`${feature.name} screenshot`}
-                    width={1600}
-                    height={900}
-                    className="h-auto w-full"
-                    priority={feature.id === "dashboard"}
-                  />
-                </div>
-              )}
+              <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50 dark:border-white/[0.08] dark:bg-[#0c1019]">
+                <Image
+                  src={meta.image}
+                  alt={`${feature.name} screenshot`}
+                  width={1600}
+                  height={900}
+                  className="h-auto w-full"
+                  priority={feature.id === "dashboard"}
+                />
+              </div>
 
               <div className="grid gap-6 lg:grid-cols-2">
                 <div className="space-y-3">
