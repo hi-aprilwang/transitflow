@@ -14,7 +14,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_DEFAULT_MAP_CENTER_LAT: z.coerce.number().default(-6.2088),
   NEXT_PUBLIC_DEFAULT_MAP_CENTER_LNG: z.coerce.number().default(106.8272),
   NEXT_PUBLIC_DEFAULT_MAP_ZOOM: z.coerce.number().default(11),
-  NEXT_PUBLIC_DEMO_MODE: z.enum(["true", "false"]).default("false"),
+  NEXT_PUBLIC_DEMO_MODE: z.enum(["true", "false"]).default("true"),
   SUPABASE_URL: z.string().url().optional(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
   COMMANDCODE_API_KEY: z.string().optional(),
