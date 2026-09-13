@@ -28,7 +28,7 @@ describe("POST /api/chat", () => {
     expect(data.status).toBe("error");
   });
 
-  it("triggers killswitch when expiry date has passed", async () => {
+  it("triggers killswitch and returns 410 when expiry date has passed", async () => {
     process.env.COMMANDCODE_EXPIRY_DATE = "2020-01-01T00:00:00+07:00";
     process.env.COMMANDCODE_API_KEY = "dummy-key";
 
@@ -40,15 +40,14 @@ describe("POST /api/chat", () => {
     });
 
     const res = await POST(req);
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(410);
 
     const data = await res.json();
-    expect(data.expired).toBe(true);
-    expect(data.offline).toBe(true);
-    expect(data.content).toContain("Vendor Crowding Index");
+    expect(data.status).toBe("error");
+    expect(data.message).toContain("CommandCode API plan expired");
   });
 
-  it("returns offline mode response when API key is missing or default placeholder", async () => {
+  it("fails loudly with 500 when API key is missing", async () => {
     process.env.COMMANDCODE_EXPIRY_DATE = "2099-01-01T00:00:00+07:00";
     process.env.COMMANDCODE_API_KEY = "";
 
@@ -60,11 +59,11 @@ describe("POST /api/chat", () => {
     });
 
     const res = await POST(req);
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(500);
 
     const data = await res.json();
-    expect(data.offline).toBe(true);
-    expect(data.content).toContain("Dukuh Atas Multi-Modal Hub");
+    expect(data.status).toBe("error");
+    expect(data.message).toContain("COMMANDCODE_API_KEY is not configured");
   });
 
   it("calls CommandCode and returns assistant response when key and date are valid", async () => {
@@ -104,17 +103,62 @@ describe("POST /api/chat", () => {
     expect(data.content).toBe("Dukuh Atas pedestrian flow is at 45 p/min/m.");
     expect(data.reasoning).toBe("Checking station telemetry...");
     expect(data.model).toBe("deepseek/deepseek-v4.1-flash");
-    expect(data.offline).toBe(false);
   });
 
-  it("gracefully falls back when upstream returns 500 error", async () => {
+  it("retries on transient failure with exponential backoff and succeeds on retry", async () => {
+    process.env.COMMANDCODE_EXPIRY_DATE = "2099-01-01T00:00:00+07:00";
+    process.env.COMMANDCODE_API_KEY = "test_commandcode_key";
+
+    let calls = 0;
+    const mockFetch = vi.fn().mockImplementation(async () => {
+      calls++;
+      if (calls === 1) {
+        return {
+          ok: false,
+          status: 503,
+          text: async () => "Service Unavailable",
+        };
+      }
+      return {
+        ok: true,
+        json: async () => ({
+          choices: [
+            {
+              message: {
+                role: "assistant",
+                content: "Success on retry!",
+              },
+            },
+          ],
+          model: "deepseek/deepseek-v4.1-flash",
+        }),
+      };
+    });
+    vi.stubGlobal("fetch", mockFetch);
+
+    const req = new NextRequest("http://localhost:3000/api/chat", {
+      method: "POST",
+      body: JSON.stringify({
+        messages: [{ role: "user", content: "Test retry" }],
+      }),
+    });
+
+    const res = await POST(req);
+    expect(res.status).toBe(200);
+
+    const data = await res.json();
+    expect(data.content).toBe("Success on retry!");
+    expect(calls).toBe(2);
+  });
+
+  it("fails loudly when upstream returns error after retries exhausted", async () => {
     process.env.COMMANDCODE_EXPIRY_DATE = "2099-01-01T00:00:00+07:00";
     process.env.COMMANDCODE_API_KEY = "test_commandcode_key";
 
     const mockFetch = vi.fn().mockResolvedValue({
       ok: false,
-      status: 500,
-      text: async () => "Internal Server Error",
+      status: 502,
+      text: async () => "Bad Gateway",
     });
     vi.stubGlobal("fetch", mockFetch);
 
@@ -126,10 +170,10 @@ describe("POST /api/chat", () => {
     });
 
     const res = await POST(req);
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(502);
 
     const data = await res.json();
-    expect(data.offline).toBe(true);
-    expect(data.content).toContain("Weather-Resilient");
+    expect(data.status).toBe("error");
+    expect(data.message).toContain("CommandCode upstream API error (502)");
   });
 });
