@@ -5,6 +5,7 @@ import Link from "next/link";
 import AppIcon from "../../../public/app_icon.png";
 import { usePathname } from "next/navigation";
 import {
+  BookOpen,
   LayoutDashboard,
   ClipboardList,
   Sparkles,
@@ -22,7 +23,15 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { APP_VERSION } from "@/lib/version";
 
-const navItems = [
+interface NavItem {
+  label: string;
+  href: string;
+  icon: typeof LayoutDashboard;
+  highlight?: boolean;
+}
+
+const navItems: NavItem[] = [
+  { label: "HOW TO USE", href: "/how-to-use", icon: BookOpen, highlight: true },
   { label: "DASHBOARD", href: "/dashboard", icon: LayoutDashboard },
   { label: "FIELD SURVEY", href: "/survey", icon: ClipboardList },
   { label: "AI INGESTION", href: "/ai-ingestion", icon: Sparkles },
@@ -88,11 +97,13 @@ export function Sidebar() {
               href={item.href}
               title={isCollapsed ? item.label : undefined}
               className={cn(
-                "flex items-center gap-3 py-2.5 rounded-xl text-[11px] font-semibold tracking-wider transition-all duration-150 overflow-hidden whitespace-nowrap relative group",
+                "flex items-center gap-3 py-2.5 rounded-xl text-[11px] font-semibold tracking-wider transition-all duration-150 overflow-hidden whitespace-nowrap relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60",
                 isCollapsed ? "px-0 justify-center" : "px-3.5",
                 isActive
                   ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25 border border-blue-400/30"
-                  : "text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.05] hover:text-slate-900 dark:hover:text-white border border-transparent",
+                  : item.highlight
+                    ? "bg-gradient-to-r from-amber-500/20 via-amber-400/10 to-transparent text-amber-600 dark:text-amber-400 border border-amber-500/40 shadow-md shadow-amber-500/10 hover:border-amber-400/60 hover:from-amber-500/25"
+                    : "text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.05] hover:text-slate-900 dark:hover:text-white border border-transparent",
               )}
             >
               <Icon
@@ -106,6 +117,11 @@ export function Sidebar() {
               {!isCollapsed && <span>{item.label}</span>}
               {isActive && !isCollapsed && (
                 <span className="absolute right-2.5 w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              )}
+              {item.highlight && !isActive && !isCollapsed && (
+                <span className="absolute right-2.5 px-1.5 py-0.5 rounded-full bg-amber-500 text-[8px] font-bold tracking-wider text-white">
+                  NEW
+                </span>
               )}
             </Link>
           );
