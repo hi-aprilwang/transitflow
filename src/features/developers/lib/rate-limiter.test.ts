@@ -28,9 +28,11 @@ describe("rate-limiter", () => {
 });
 
 describe("dev fixtures", () => {
-  it("exposes 4 gateway endpoints", () => {
-    expect(API_ENDPOINTS).toHaveLength(4);
+  it("exposes gateway and MAPID platform endpoints", () => {
+    expect(API_ENDPOINTS).toHaveLength(8);
     expect(API_ENDPOINTS[1].path).toContain("exit-status");
+    expect(API_ENDPOINTS.some((e) => e.id === "mapid-isochrone")).toBe(true);
+    expect(API_ENDPOINTS.some((e) => e.id === "mapid-basemap")).toBe(true);
   });
 
   it("builds exit-status GeoJSON", () => {

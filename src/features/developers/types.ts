@@ -1,6 +1,6 @@
 export interface ApiEndpoint {
   id: string;
-  method: "GET";
+  method: "GET" | "POST";
   path: string;
   description: string;
   exampleParams: Array<{ key: string; value: string }>;

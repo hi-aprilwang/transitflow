@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef, useSyncExternalStore } from "react";
-import { Search, Bell, MapPin, Loader2, Sun, Moon, ChevronDown, Sparkles } from "lucide-react";
+import { Search, Bell, MapPin, Loader2, Sun, Moon, ChevronDown, Sparkles, Globe } from "lucide-react";
 import { useStationUIStore } from "@/features/stations/store/station-ui-store";
 import { getStationRepository } from "@/infrastructure/mock/provider-registry";
+import { searchMapidLocation, type MapidLocationResult } from "@/lib/mapid/mapid-service";
 import { useThemeStore } from "@/lib/theme-store";
 import { useChatStore } from "@/features/chat/store/chat-store";
 import { DemoBadge } from "./demo-badge";
+import { JudgeTourPill } from "./judge-tour-pill";
 import type { StationNode } from "@/entities/station";
 import type { GeoJSONFeature } from "@/entities/geojson";
 
@@ -21,6 +23,7 @@ export function TopBar({ showSearch = true }: TopBarProps) {
 
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<GeoJSONFeature<StationNode>[]>([]);
+  const [mapidResults, setMapidResults] = useState<MapidLocationResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,6 +44,7 @@ export function TopBar({ showSearch = true }: TopBarProps) {
     if (!trimmed) {
       debounceRef.current = setTimeout(() => {
         setResults([]);
+        setMapidResults([]);
         setIsOpen(false);
       }, 0);
       return;
@@ -49,11 +53,16 @@ export function TopBar({ showSearch = true }: TopBarProps) {
     debounceRef.current = setTimeout(async () => {
       setIsLoading(true);
       try {
-        const data = await getStationRepository().search(trimmed);
-        setResults(data.features);
-        setIsOpen(true);
+        const [stationData, locationData] = await Promise.all([
+          getStationRepository().search(trimmed).catch(() => ({ features: [] })),
+          searchMapidLocation(trimmed).catch(() => []),
+        ]);
+        setResults(stationData.features);
+        setMapidResults(locationData);
+        setIsOpen(stationData.features.length > 0 || locationData.length > 0);
       } catch {
         setResults([]);
+        setMapidResults([]);
       } finally {
         setIsLoading(false);
       }
@@ -86,8 +95,14 @@ export function TopBar({ showSearch = true }: TopBarProps) {
     setIsOpen(false);
   }
 
+  function handleSelectMapid(item: MapidLocationResult) {
+    flyToStation({ lng: item.lng, lat: item.lat, stationId: "MAPID-SEARCH" });
+    setQuery(item.shortName);
+    setIsOpen(false);
+  }
+
   return (
-    <div className="flex items-center gap-3 px-5 py-3.5 bg-white/90 dark:bg-[#0c1019]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-white/[0.08] shrink-0 transition-colors duration-200 z-20">
+    <div className="relative z-40 flex items-center gap-3 px-5 py-3.5 bg-white/90 dark:bg-[#0c1019]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-white/[0.08] shrink-0 transition-colors duration-200">
       {/* Station scope dropdown */}
       <button className="flex items-center gap-2 px-3.5 py-1.5 bg-slate-100 dark:bg-[#141b2b] border border-slate-200/60 dark:border-white/10 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-200/70 dark:hover:bg-white/[0.08] transition-all duration-150 shadow-sm">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -123,49 +138,91 @@ export function TopBar({ showSearch = true }: TopBarProps) {
           {/* Search results dropdown */}
           {isOpen && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 dark:bg-[#0e1422]/95 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden">
-              {results.length === 0 ? (
+              {results.length === 0 && mapidResults.length === 0 ? (
                 <div className="px-4 py-3 text-sm text-slate-400 dark:text-slate-500 text-center">
-                  No matching spatial nodes found
+                  No matching transit nodes or MAPID places found
                 </div>
               ) : (
-                <ul className="max-h-60 overflow-y-auto divide-y divide-slate-100 dark:divide-white/[0.06]">
-                  {results.map((feature) => {
-                    const s = feature.properties;
-                    return (
-                      <li key={s.station_id}>
-                        <button
-                          type="button"
-                          onClick={() => handleSelect(feature)}
-                          className="w-full px-4 py-2.5 flex items-center gap-3 hover:bg-blue-50/80 dark:hover:bg-white/[0.06] text-left transition-colors group"
-                        >
-                          <MapPin
-                            size={14}
-                            className="text-blue-500 shrink-0 group-hover:scale-110 transition-transform"
-                          />
-                          <div className="min-w-0">
-                            <p className="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">
-                              {s.station_name}
-                            </p>
-                            <p className="text-[10px] font-mono text-slate-400 dark:text-slate-400 truncate mt-0.5">
-                              {s.operator} ·{" "}
-                              <span
-                                className={
-                                  s.status === "OPERATIONAL"
-                                    ? "text-emerald-500 font-semibold"
-                                    : s.status === "CONGESTED"
-                                      ? "text-rose-500 font-semibold"
-                                      : "text-amber-500 font-semibold"
-                                }
+                <div className="max-h-72 overflow-y-auto divide-y divide-slate-100 dark:divide-white/[0.06]">
+                  {results.length > 0 && (
+                    <div>
+                      <div className="px-4 py-1.5 bg-slate-50 dark:bg-[#141b2b]/60 text-sm font-bold text-slate-500 uppercase tracking-wider">
+                        Transit Stations
+                      </div>
+                      <ul>
+                        {results.map((feature) => {
+                          const s = feature.properties;
+                          return (
+                            <li key={s.station_id}>
+                              <button
+                                type="button"
+                                onClick={() => handleSelect(feature)}
+                                className="w-full px-4 py-2.5 flex items-center gap-3 hover:bg-blue-50/80 dark:hover:bg-white/[0.06] text-left transition-colors group"
                               >
-                                {s.status}
-                              </span>
-                            </p>
-                          </div>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
+                                <MapPin
+                                  size={16}
+                                  className="text-blue-500 shrink-0 group-hover:scale-110 transition-transform"
+                                />
+                                <div className="min-w-0 flex-1">
+                                  <p className="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">
+                                    {s.station_name}
+                                  </p>
+                                  <p className="text-sm font-mono text-slate-500 dark:text-slate-400 truncate">
+                                    {s.operator} ·{" "}
+                                    <span
+                                      className={
+                                        s.status === "OPERATIONAL"
+                                          ? "text-emerald-500 font-semibold"
+                                          : s.status === "CONGESTED"
+                                            ? "text-rose-500 font-semibold"
+                                            : "text-amber-500 font-semibold"
+                                      }
+                                    >
+                                      {s.status}
+                                    </span>
+                                  </p>
+                                </div>
+                              </button>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  )}
+
+                  {mapidResults.length > 0 && (
+                    <div>
+                      <div className="px-4 py-1.5 bg-slate-50 dark:bg-[#141b2b]/60 text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider flex items-center justify-between">
+                        <span>MAPID Geocoded Places</span>
+                        <span className="font-normal lowercase text-sm">nominatim.mapid.io</span>
+                      </div>
+                      <ul>
+                        {mapidResults.map((item, idx) => (
+                          <li key={`mapid-${idx}`}>
+                            <button
+                              type="button"
+                              onClick={() => handleSelectMapid(item)}
+                              className="w-full px-4 py-2.5 flex items-center gap-3 hover:bg-blue-50/80 dark:hover:bg-white/[0.06] text-left transition-colors group"
+                            >
+                              <Globe
+                                size={16}
+                                className="text-emerald-500 shrink-0 group-hover:scale-110 transition-transform"
+                              />
+                              <div className="min-w-0 flex-1">
+                                <p className="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">
+                                  {item.shortName}
+                                </p>
+                                <p className="text-sm text-slate-500 dark:text-slate-400 truncate">
+                                  {item.displayName}
+                                </p>
+                              </div>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           )}
@@ -173,6 +230,9 @@ export function TopBar({ showSearch = true }: TopBarProps) {
       )}
 
       <div className="flex-1" />
+
+      {/* Evaluator 1-Click Scenario Tour */}
+      <JudgeTourPill />
 
       {/* Demo mode indicator */}
       <DemoBadge />

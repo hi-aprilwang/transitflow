@@ -4,6 +4,8 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { Map as MapLibreMap, Marker } from "maplibre-gl";
 import { AppShell } from "@/components/shared/app-shell";
 import { MapCanvas } from "@/components/shared/map-canvas";
+import { MapidBasemapSwitcher } from "@/components/shared/mapid-basemap-switcher";
+import { MapidIsochroneLayer } from "./components/mapid-isochrone-layer";
 import { MapDrawControl } from "@/components/shared/MapDrawControl";
 import { StationInfoCard } from "./components/station-info-card";
 import { ActiveLayersPanel } from "./components/active-layers-panel";
@@ -164,6 +166,12 @@ export function DashboardView() {
           <RainModeOverlay map={mapInstance} enabled={layers.rainMode} />
           <RainfallChip />
           <ForecastLayerController map={mapInstance} enabled={layers.forecast} />
+          <MapidIsochroneLayer map={mapInstance} />
+
+          {/* Floating MAPID Basemap Switcher widget */}
+          <div className="absolute bottom-6 right-4 z-20">
+            <MapidBasemapSwitcher />
+          </div>
 
           {/* Buffer allocator — editor tools & layers */}
           {bufferEnabled && (

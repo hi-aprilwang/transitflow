@@ -28,7 +28,7 @@ export function AppShell({ children, showSearch = true }: AppShellProps) {
       <Sidebar />
       <div className="flex flex-col flex-1 min-w-0">
         <TopBar showSearch={showSearch} />
-        <main className="flex-1 relative overflow-hidden">{children}</main>
+        <main className="flex-1 relative z-0 overflow-hidden">{children}</main>
       </div>
       <AiChatDrawer />
     </div>

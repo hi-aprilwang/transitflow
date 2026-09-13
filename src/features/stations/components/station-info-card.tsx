@@ -1,7 +1,9 @@
 "use client";
 
-import { MapPin, TrendingUp, AlertTriangle, Sparkles, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { MapPin, TrendingUp, AlertTriangle, Sparkles, ArrowRight, Footprints, Loader2, X } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import type { StationNode } from "@/entities/station";
 import { useStationAttachments } from "@/features/ai-ingestion/hooks/use-station-attachments";
@@ -11,6 +13,13 @@ import { useVciHistory } from "@/features/vci/hooks/use-vci-history";
 import { VciSparkline } from "@/features/vci/components/vci-sparkline";
 import { bandOf } from "@/features/vci/lib/vci-formula";
 import { VCI_CHANNEL_SEEDS, stationOfChannel } from "@/infrastructure/mock/fixtures/vci-fixtures";
+import { DEMO_STATIONS } from "@/infrastructure/mock/fixtures/stations";
+import { useStationUIStore } from "@/features/stations/store/station-ui-store";
+import {
+  fetchMapidIsochrone,
+  calculatePolygonAreaHectares,
+  estimateCatchmentPopulation,
+} from "@/lib/mapid/mapid-service";
 
 interface StationInfoCardProps {
   station: StationNode;
@@ -44,6 +53,47 @@ export function StationInfoCard({ station }: StationInfoCardProps) {
 
   const isHighRisk = worst != null && worst.vci_score >= 80;
   const band = worst ? bandOf(worst.vci_score) : "GREEN";
+
+  const [loadingIsochrone, setLoadingIsochrone] = useState(false);
+  const isochroneMinutes = useStationUIStore((s) => s.isochroneMinutes);
+  const activeIsochroneGeoJSON = useStationUIStore((s) => s.activeIsochroneGeoJSON);
+  const setIsochrone = useStationUIStore((s) => s.setIsochrone);
+  const clearIsochrone = useStationUIStore((s) => s.clearIsochrone);
+
+  const stationFeature = DEMO_STATIONS.features.find(
+    (f) => f.properties.station_id === station.station_id,
+  );
+  const coords =
+    stationFeature?.geometry.type === "Point"
+      ? (stationFeature.geometry.coordinates as [number, number])
+      : [106.8272, -6.2088];
+
+  const handleGenerateIsochrone = async (minutes: 5 | 10 | 15) => {
+    setLoadingIsochrone(true);
+    try {
+      const geojson = await fetchMapidIsochrone({
+        lat: coords[1],
+        lng: coords[0],
+        timeLimitSeconds: minutes * 60,
+        profile: "foot",
+      });
+      if (geojson) {
+        setIsochrone(minutes, geojson);
+        toast.success(`Generated MAPID ${minutes}-min walk catchment`);
+      } else {
+        toast.error("MAPID Isochrone service request failed");
+      }
+    } catch {
+      toast.error("Network error while connecting to MAPID");
+    } finally {
+      setLoadingIsochrone(false);
+    }
+  };
+
+  const isochroneAreaHa = activeIsochroneGeoJSON
+    ? calculatePolygonAreaHectares(activeIsochroneGeoJSON.geometry)
+    : 0;
+  const isochronePop = estimateCatchmentPopulation(isochroneAreaHa);
 
   return (
     <div className="bg-white/95 dark:bg-[#0c1019]/95 backdrop-blur-xl border border-slate-200/80 dark:border-white/[0.08] rounded-2xl shadow-2xl p-4.5 w-76 transition-all duration-200 relative overflow-hidden group">
@@ -120,6 +170,77 @@ export function StationInfoCard({ station }: StationInfoCardProps) {
         <div className="text-blue-500">
           <VciSparkline history={history ?? []} />
         </div>
+      </div>
+
+      {/* MAPID Walk Catchment (Isochrone) */}
+      <div className="mt-3 rounded-xl bg-slate-50 dark:bg-[#141b2b]/90 border border-slate-100 dark:border-white/[0.06] p-3">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+            <Footprints size={15} className="text-blue-500 shrink-0" />
+            <span>Walk Catchment</span>
+          </span>
+          <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">
+            MAPID Isochrone
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1.5 mb-2">
+          {([5, 10, 15] as const).map((m) => {
+            const isSelected = isochroneMinutes === m;
+            return (
+              <button
+                key={m}
+                type="button"
+                disabled={loadingIsochrone}
+                onClick={() => handleGenerateIsochrone(m)}
+                className={cn(
+                  "flex-1 py-1.5 px-2 rounded-lg text-sm font-semibold border transition-all text-center",
+                  isSelected
+                    ? "bg-blue-600 border-blue-600 text-white shadow-sm"
+                    : "bg-white dark:bg-[#0c1019] border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-blue-500/40",
+                )}
+              >
+                {m}m
+              </button>
+            );
+          })}
+          {activeIsochroneGeoJSON && (
+            <button
+              type="button"
+              onClick={clearIsochrone}
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 text-slate-500 hover:text-rose-500 hover:border-rose-500/30 transition-colors"
+              title="Clear isochrone layer"
+            >
+              <X size={14} />
+            </button>
+          )}
+        </div>
+
+        {loadingIsochrone ? (
+          <div className="flex items-center gap-2 py-1 text-sm text-blue-500 font-medium">
+            <Loader2 size={14} className="animate-spin" />
+            <span>Querying MAPID routing engine...</span>
+          </div>
+        ) : activeIsochroneGeoJSON ? (
+          <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-200/60 dark:border-white/[0.06]">
+            <div>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Reach Area</p>
+              <p className="text-sm font-bold text-slate-900 dark:text-white font-mono">
+                {isochroneAreaHa} ha
+              </p>
+            </div>
+            <div>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Est. Pop Catchment</p>
+              <p className="text-sm font-bold text-slate-900 dark:text-white font-mono">
+                {isochronePop.toLocaleString()} residents
+              </p>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Real-time pedestrian reachability computed by MAPID routing.
+          </p>
+        )}
       </div>
 
       {/* AI Attachments */}
