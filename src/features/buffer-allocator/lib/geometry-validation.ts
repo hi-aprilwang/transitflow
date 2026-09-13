@@ -146,9 +146,9 @@ export function isInsideStationBounds(
 
 export function computeVciDelta(
   barrier: { id: string; active: boolean },
-  _exitContext: ExitBufferContext,
+  exitContext?: ExitBufferContext,
 ): number {
-  if (!barrier.active) return 0;
+  if (!barrier.active || !exitContext) return 0;
   let seed = 0;
   for (const ch of barrier.id) seed = (seed * 31 + ch.charCodeAt(0)) % 1_000_000;
   return -(14 + (seed % 7)); // -14..-20, deterministic per barrier id

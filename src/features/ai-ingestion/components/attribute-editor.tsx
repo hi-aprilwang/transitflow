@@ -102,7 +102,7 @@ function AttributeRow({
             value={Number.isNaN(local) ? "" : local}
             onChange={(e) => handleChange(e.target.valueAsNumber)}
             className={cn(
-              "w-24 bg-slate-100 dark:bg-[#0c1019] font-mono text-xs rounded-lg px-2.5 py-1.5 border focus:outline-none focus:ring-1 transition-colors",
+              "w-24 bg-slate-100 dark:bg-[#0c1019] font-mono text-sm rounded-lg px-2.5 py-1.5 border focus:outline-none focus:ring-1 transition-colors",
               error
                 ? "border-rose-500 focus:ring-rose-500/30"
                 : "border-slate-200/80 dark:border-white/10 focus:border-blue-500/60 focus:ring-blue-500/30",

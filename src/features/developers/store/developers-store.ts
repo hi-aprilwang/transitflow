@@ -20,7 +20,7 @@ interface DevelopersState {
 
 const STARTED_AT = Date.now();
 
-export const useDevelopersStore = create<DevelopersState>((set, get) => ({
+export const useDevelopersStore = create<DevelopersState>((set) => ({
   key: { key: "tf_live_xxxxxxxxxxxx", requestsUsed: 0, quotaPerMinute: 60 },
   calls: [],
   signals: SIGNALS.map((s) => ({ ...s })),

@@ -62,7 +62,7 @@ export function ActiveLayersPanel() {
                   </svg>
                 )}
               </div>
-              <span className="text-xs font-semibold flex-1 tracking-tight">
+              <span className="text-sm font-semibold flex-1 tracking-tight">
                 {label}
               </span>
               <Icon

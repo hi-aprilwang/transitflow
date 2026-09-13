@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { APP_VERSION } from "@/lib/version";
 
 const navItems = [
   { label: "DASHBOARD", href: "/dashboard", icon: LayoutDashboard },
@@ -66,7 +67,7 @@ export function Sidebar() {
           {!isCollapsed && (
             <div className="flex flex-col">
               <span className="font-bold text-slate-900 dark:text-white text-sm tracking-tight">
-                TransitFlow <span className="text-blue-500 font-mono text-xs">AI</span>
+                TransitFlow <span className="text-blue-500 font-mono text-sm">AI</span>
               </span>
               <span className="text-[10px] tracking-[0.2em] text-slate-400 dark:text-slate-500 uppercase">
                 Spatial GIS Engine
@@ -124,17 +125,17 @@ export function Sidebar() {
             isCollapsed && "justify-center",
           )}
         >
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xs font-mono font-bold shrink-0 shadow-md shadow-blue-500/20 cursor-pointer hover:opacity-90 transition-opacity">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-mono font-bold shrink-0 shadow-md shadow-blue-500/20 cursor-pointer hover:opacity-90 transition-opacity">
             OA
           </div>
           {!isCollapsed && (
             <>
               <div className="flex-1 min-w-0">
-                <div className="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate">
+                <div className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">
                   Operator Admin
                 </div>
                 <div className="font-mono text-[9px] text-slate-400 dark:text-slate-500 uppercase tracking-[0.15em]">
-                  Auth · v1.2.0
+                  Auth · v{APP_VERSION}
                 </div>
               </div>
               <button className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">

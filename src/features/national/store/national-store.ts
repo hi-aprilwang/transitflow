@@ -23,7 +23,7 @@ interface NationalState {
 
 const STARTED_AT = Date.now();
 
-export const useNationalStore = create<NationalState>((set, get) => ({
+export const useNationalStore = create<NationalState>((set) => ({
   cityId: "jakarta",
   locale: "id",
   hubs: HUB_STATS.map((h) => ({ ...h })),

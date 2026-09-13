@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { TrafficCone, MoveVertical, Droplets, ImagePlus, CheckCircle2, Send } from "lucide-react";
 import { usePortalStore } from "../store/portal-store";
-import { crowdReportSchema, type CrowdReportInput } from "../lib/schemas";
+import { type CrowdReportInput } from "../lib/schemas";
 import { cn } from "@/lib/utils";
 
 const TYPES: Array<{ type: CrowdReportInput["type"]; labelId: string; labelEn: string; icon: typeof TrafficCone }> = [

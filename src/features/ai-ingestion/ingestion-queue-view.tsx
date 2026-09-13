@@ -38,7 +38,7 @@ export function IngestionQueueView() {
             <p className="text-sm font-semibold text-slate-900 dark:text-white">
               AI Ingestion is a demo-mode surface
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+            <p className="text-sm text-slate-500 dark:text-slate-400 font-mono">
               Set NEXT_PUBLIC_DEMO_MODE=true to explore the mock pipeline
             </p>
           </div>
@@ -74,7 +74,7 @@ export function IngestionQueueView() {
               placeholder="Search queue (id / survey / gate)…"
               value={filters.q}
               onChange={(e) => setFilter({ q: e.target.value })}
-              className="w-full pl-9 pr-4 py-1.5 bg-slate-100/90 dark:bg-[#141b2b]/90 border border-slate-200/60 dark:border-white/10 rounded-xl text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/30 transition-all"
+              className="w-full pl-9 pr-4 py-1.5 bg-slate-100/90 dark:bg-[#141b2b]/90 border border-slate-200/60 dark:border-white/10 rounded-xl text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/30 transition-all"
             />
           </div>
 
@@ -103,7 +103,7 @@ export function IngestionQueueView() {
             aria-label="Filter by station"
             value={filters.stationId}
             onChange={(e) => setFilter({ stationId: e.target.value })}
-            className="bg-slate-100 dark:bg-[#141b2b] text-slate-800 dark:text-slate-200 text-xs rounded-xl px-3 py-1.5 border border-slate-200/60 dark:border-white/10 focus:outline-none focus:border-blue-500/60"
+            className="bg-slate-100 dark:bg-[#141b2b] text-slate-800 dark:text-slate-200 text-sm rounded-xl px-3 py-1.5 border border-slate-200/60 dark:border-white/10 focus:outline-none focus:border-blue-500/60"
           >
             <option value="">ALL STATIONS</option>
             {(stationsData?.features ?? []).map((f) => (

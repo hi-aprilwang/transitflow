@@ -53,14 +53,14 @@ export function RainSafePathModal() {
 
         <div className="flex items-center gap-3 mb-5">
           <div className="flex-1">
-            <p className="text-xs text-slate-500 dark:text-slate-400">Trip</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">Trip</p>
             <p className="text-sm font-bold text-slate-900 dark:text-white">
               Tanah Abang → Sudirman
             </p>
           </div>
           <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/25">
             <Umbrella size={13} className="text-emerald-500" />
-            <span className="text-xs font-semibold text-emerald-500">
+            <span className="text-sm font-semibold text-emerald-500">
               {autoEnabled ? "Aktif" : "Tidak aktif"}
             </span>
           </div>
@@ -91,7 +91,7 @@ export function RainSafePathModal() {
             <p className="text-sm font-semibold text-slate-900 dark:text-white">
               Via covered walkway C · +{best.timeDeltaMin} min
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
               {best.coveredPct}% jalur terlindung — elevated walkway & indoor corridor
             </p>
           </div>
@@ -100,7 +100,7 @@ export function RainSafePathModal() {
         <button
           type="button"
           onClick={() => setModalOpen(false)}
-          className="mt-5 w-full px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 border border-blue-400/30 transition-colors"
+          className="mt-5 w-full px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 border border-blue-400/30 transition-colors"
         >
           Tutup
         </button>

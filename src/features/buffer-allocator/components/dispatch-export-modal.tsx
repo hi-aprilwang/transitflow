@@ -89,7 +89,7 @@ export function DispatchExportModal() {
             <button
               type="button"
               onClick={() => setExportOpen(false)}
-              className="mt-3 px-4 py-2 rounded-xl text-xs font-semibold border border-slate-200/60 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors"
+              className="mt-3 px-4 py-2 rounded-xl text-sm font-semibold border border-slate-200/60 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors"
             >
               Close
             </button>
@@ -160,7 +160,7 @@ export function DispatchExportModal() {
                 type="button"
                 onClick={copyPayload}
                 disabled={!data}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 border border-blue-400/30 shadow-md shadow-blue-600/25 transition-all duration-150 active:scale-95 disabled:opacity-50"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 border border-blue-400/30 shadow-md shadow-blue-600/25 transition-all duration-150 active:scale-95 disabled:opacity-50"
               >
                 {copied ? <Check size={14} /> : <Copy size={14} />}
                 {copied ? "Payload copied — matches /api/v1/buffer-zones/active" : "Copy webhook payload"}
@@ -175,7 +175,7 @@ export function DispatchExportModal() {
             <button
               type="button"
               onClick={openExport}
-              className="mt-2 w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold border border-slate-200/60 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors"
+              className="mt-2 w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border border-slate-200/60 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors"
             >
               <FileDown size={13} />
               Regenerate plan

@@ -67,7 +67,7 @@ export function AlertChannelFeed() {
       <div id="feed-tabpanel" role="tabpanel" aria-label={`${CHANNEL_META[channelTab].label} messages`}>
 
       {tabItems.length === 0 ? (
-        <p className="text-xs text-slate-500 dark:text-slate-400 py-4 text-center">
+        <p className="text-sm text-slate-500 dark:text-slate-400 py-4 text-center">
           No {CHANNEL_META[channelTab].label.toLowerCase()} messages delivered yet
         </p>
       ) : (

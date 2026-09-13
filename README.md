@@ -85,9 +85,9 @@ Client Component → Hook → Repository → Axios → Next.js API Route → Sup
 ### Install
 
 ```bash
-git clone https://github.com/Ryhn-F/transit-flow-fe.git
-cd transit-flow-fe
-npm install        # postinstall also provisions the MapLibre workers into /public
+git clone https://github.com/hi-aprilwang/transitflow.git
+cd transitflow
+pnpm install        # postinstall also provisions the MapLibre workers into /public
 ```
 
 ### Environment
@@ -109,7 +109,7 @@ cp .env.example .env.local
 ### Run
 
 ```bash
-npm run dev        # http://localhost:3000
+pnpm dev            # http://localhost:3000
 ```
 
 ## Project Structure
@@ -143,12 +143,12 @@ e2e/                        # Playwright specs
 
 | Command | Purpose |
 | --- | --- |
-| `npm run dev` | Development server |
-| `npm run build` / `npm start` | Production build / serve |
-| `npm run lint` | ESLint |
-| `npm test` | Vitest (unit) |
-| `npm run test:watch` | Vitest watch mode |
-| `npm run test:e2e` | Playwright E2E |
+| `pnpm dev` | Development server |
+| `pnpm build` / `pnpm start` | Production build / serve |
+| `pnpm lint` | ESLint |
+| `pnpm test` | Vitest (unit) |
+| `pnpm test:watch` | Vitest watch mode |
+| `pnpm test:e2e` | Playwright E2E |
 
 ## Roadmap
 

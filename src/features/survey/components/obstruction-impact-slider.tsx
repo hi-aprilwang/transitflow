@@ -15,7 +15,7 @@ export function ObstructionImpactSlider({
         <label className="font-mono text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">
           Obstruction Impact (%)
         </label>
-        <span className="font-mono text-xs font-bold text-slate-900 dark:text-slate-100">{value}%</span>
+        <span className="font-mono text-sm font-bold text-slate-900 dark:text-slate-100">{value}%</span>
       </div>
       <input
         type="range"

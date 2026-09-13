@@ -1,5 +1,4 @@
 import type { ForecastEvent, ForecastSeries, ScenarioInput } from "./fixture-model";
-import { generateSeries } from "./fixture-model";
 
 export function applyTrainDelay(series: ForecastSeries, delayMin: number): ForecastSeries {
   if (delayMin <= 0) return series;

@@ -79,7 +79,7 @@ export function LiveAlertsPanel() {
               </div>
               {/* Text */}
               <div className="flex-1 min-w-0">
-                <div className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-tight">
+                <div className="text-sm font-bold text-slate-900 dark:text-slate-100 leading-tight">
                   {alert.title}
                 </div>
                 <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5 leading-snug">

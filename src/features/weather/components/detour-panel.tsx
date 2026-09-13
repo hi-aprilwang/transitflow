@@ -35,7 +35,7 @@ export function DetourPanel() {
       {detours.length === 0 ? (
         <div className="py-4 text-center space-y-1.5">
           <AlertTriangle size={15} className="mx-auto text-amber-400" />
-          <p className="text-xs text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             No covered alternative available for this trip
           </p>
         </div>
@@ -73,7 +73,7 @@ export function DetourPanel() {
       <button
         type="button"
         onClick={() => setModalOpen(true)}
-        className="mt-3 w-full px-3 py-2 rounded-xl text-xs font-semibold border border-blue-500/30 text-blue-500 bg-blue-500/10 hover:bg-blue-500/20 transition-colors"
+        className="mt-3 w-full px-3 py-2 rounded-xl text-sm font-semibold border border-blue-500/30 text-blue-500 bg-blue-500/10 hover:bg-blue-500/20 transition-colors"
       >
         Preview commuter view
       </button>
