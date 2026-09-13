@@ -75,7 +75,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
               className="flex items-center gap-1.5 text-sm font-mono text-emerald-600 dark:text-emerald-400 hover:opacity-80 transition-opacity"
             >
               <Sparkles size={13} />
-              <span>DeepSeek Reasoning Trace</span>
+              <span>Spatial Reasoning Trace</span>
               {showReasoning ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
             </button>
             {showReasoning && (
@@ -203,9 +203,6 @@ export function AiChatDrawer() {
           <span className="text-sm font-semibold tracking-wide">
             TransitFlow AI
           </span>
-          <span className="px-2 py-0.5 rounded-full bg-white/20 text-sm font-mono">
-            DeepSeek 4.1
-          </span>
         </button>
       )}
 
@@ -228,7 +225,7 @@ export function AiChatDrawer() {
                   </h3>
                   <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-sm font-mono font-medium">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    DeepSeek 4.1
+                    Active
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 mt-0.5">
@@ -289,15 +286,15 @@ export function AiChatDrawer() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Prompt Chips */}
-          <div className="px-4 py-2 bg-slate-50/50 dark:bg-[#101726]/50 border-t border-slate-200/60 dark:border-white/5 flex gap-2 overflow-x-auto no-scrollbar shrink-0">
-            {quickPrompts.map((qp) => (
+          {/* Quick Prompt Templates (No horizontal scroll) */}
+          <div className="px-4 py-2.5 bg-slate-50/70 dark:bg-[#101726]/70 border-t border-slate-200/60 dark:border-white/5 flex flex-wrap gap-2 shrink-0">
+            {quickPrompts.slice(0, 3).map((qp) => (
               <button
                 key={qp.id}
                 type="button"
                 onClick={() => handlePromptClick(qp.prompt)}
                 disabled={isLoading}
-                className="px-3 py-1.5 rounded-xl bg-white dark:bg-[#182238] border border-slate-200 dark:border-white/10 text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-white/10 transition-all whitespace-nowrap shrink-0 shadow-sm disabled:opacity-50"
+                className="flex-1 min-w-[110px] px-3 py-2 rounded-xl bg-white dark:bg-[#182238] border border-slate-200/80 dark:border-white/10 text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-white/10 transition-all text-center shadow-sm disabled:opacity-50 active:scale-95"
               >
                 {qp.label}
               </button>
@@ -329,7 +326,7 @@ export function AiChatDrawer() {
               </button>
             </div>
             <div className="flex justify-between items-center mt-2 px-1 text-sm font-mono text-slate-400 dark:text-slate-500">
-              <span>Enter to send · DeepSeek 4.1 Flash</span>
+              <span>Enter to send</span>
               <span>MAPID Catalyst 2026</span>
             </div>
           </form>

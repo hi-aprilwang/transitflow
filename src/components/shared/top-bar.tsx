@@ -182,7 +182,7 @@ export function TopBar({ showSearch = true }: TopBarProps) {
         type="button"
         onClick={toggleChat}
         className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-600/10 via-indigo-600/10 to-emerald-600/10 border border-blue-500/20 hover:border-emerald-500/40 text-slate-700 dark:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-white/10 active:scale-95 transition-all text-sm font-medium shadow-sm group"
-        title="Open AI Spatial Copilot (DeepSeek 4.1 Flash)"
+        title="Open AI Spatial Copilot"
       >
         <Sparkles size={14} className="text-emerald-500 group-hover:rotate-12 transition-transform" />
         <span className="hidden sm:inline">AI Copilot</span>

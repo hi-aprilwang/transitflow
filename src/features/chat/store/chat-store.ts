@@ -4,13 +4,13 @@ import type { ChatMessage, QuickPrompt } from "../types";
 export const DEFAULT_QUICK_PROMPTS: QuickPrompt[] = [
   {
     id: "dukuh-atas-status",
-    label: "Dukuh Atas Live Flow",
+    label: "Dukuh Atas Flow",
     prompt: "Where is the highest pedestrian congestion in Dukuh Atas Hub right now?",
     category: "congestion",
   },
   {
     id: "monsoon-route",
-    label: "Rain Rerouting",
+    label: "Rain Safe Route",
     prompt: "What is the recommended safe exit route during heavy monsoon rain?",
     category: "weather",
   },
@@ -20,12 +20,6 @@ export const DEFAULT_QUICK_PROMPTS: QuickPrompt[] = [
     prompt: "Explain how the Vendor Crowding Index (VCI) measures walkway bottlenecks.",
     category: "methodology",
   },
-  {
-    id: "sini-vision",
-    label: "SINI AI Vision",
-    prompt: "How does the SINI AI edge vision pipeline detect vendors and crowd density?",
-    category: "spatial",
-  },
 ];
 
 const INITIAL_MESSAGES: ChatMessage[] = [
@@ -34,9 +28,9 @@ const INITIAL_MESSAGES: ChatMessage[] = [
     role: "assistant",
     content: `👋 **Welcome to TransitFlow AI Spatial Copilot!**
 
-I am powered by **DeepSeek 4.1 Flash** via CommandCode to provide spatial crowd analytics, multimodal route recommendations, and weather-resilient transit guidance across Jakarta's TOD hubs.
+I provide real-time spatial crowd analytics, multimodal route recommendations, and weather-resilient transit guidance across Jakarta's TOD hubs.
 
-Select a quick query below or ask any question about **Dukuh Atas, Manggarai, VCI metrics, or real-time spatial bottlenecks**!`,
+Select a template question below or ask anything about **Dukuh Atas, Manggarai, VCI metrics, or walkway flow rates**!`,
     timestamp: Date.now(),
   },
 ];
