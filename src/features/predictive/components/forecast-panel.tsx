@@ -214,7 +214,7 @@ export function ForecastPanel() {
                 max={120}
                 value={scenarioInput.trainDelayMin}
                 onChange={(e) => setScenarioInput({ ...scenarioInput, trainDelayMin: Number(e.target.value) })}
-                className="w-full bg-slate-100 dark:bg-[#141b2b] text-xs rounded-xl px-3 py-2 border border-slate-200/80 dark:border-white/10 focus:outline-none focus:border-blue-500/60"
+                className="w-full bg-slate-100 dark:bg-[#141b2b] text-sm rounded-xl px-3 py-2 border border-slate-200/80 dark:border-white/10 focus:outline-none focus:border-blue-500/60"
               />
             </label>
             <label className="block">
@@ -224,7 +224,7 @@ export function ForecastPanel() {
               <select
                 value={scenarioInput.rainLevel}
                 onChange={(e) => setScenarioInput({ ...scenarioInput, rainLevel: e.target.value as "none" | "light" | "heavy" })}
-                className="w-full bg-slate-100 dark:bg-[#141b2b] text-xs rounded-xl px-3 py-2 border border-slate-200/80 dark:border-white/10"
+                className="w-full bg-slate-100 dark:bg-[#141b2b] text-sm rounded-xl px-3 py-2 border border-slate-200/80 dark:border-white/10"
               >
                 <option value="none">None</option>
                 <option value="light">Light</option>
@@ -237,7 +237,7 @@ export function ForecastPanel() {
             type="button"
             onClick={() => void runScenario()}
             disabled={runningScenarioId != null}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 border border-indigo-400/30 transition-colors disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 border border-indigo-400/30 transition-colors disabled:opacity-50"
           >
             <FlaskConical size={12} />
             {runningScenarioId ? "Computing…" : "Run Simulation"}

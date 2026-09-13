@@ -33,7 +33,7 @@ export function FloodDepthFeed() {
           {sorted.length === 0 ? (
             <div className="py-4 text-center space-y-1.5">
               <CloudRain size={16} className="mx-auto text-slate-400" />
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 No flood detections in the last 30 minutes.
               </p>
             </div>

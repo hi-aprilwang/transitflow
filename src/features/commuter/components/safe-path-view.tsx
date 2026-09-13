@@ -36,7 +36,7 @@ export function SafePathView() {
   return (
     <div className="p-5 space-y-5">
       <section className="rounded-3xl border border-emerald-500/25 bg-emerald-500/5 p-5">
-        <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">
+        <p className="text-sm font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">
           {t("Pintu Teraman", "Safest Door")}
         </p>
         <p className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
@@ -65,7 +65,7 @@ export function SafePathView() {
 
       {/* Comparison */}
       <section aria-label={t("Perbandingan pintu", "Door comparison")}>
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+        <p className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">
           {t("Perbandingan pintu", "Door comparison")}
         </p>
         <div className="space-y-2" role="list">

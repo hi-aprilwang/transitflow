@@ -133,7 +133,7 @@ export function ChokeAlertBanner() {
       <button
         type="button"
         onClick={() => acknowledge({ alertId: open.alert_id, note: "Operator acknowledged" })}
-        className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 shadow-md shadow-rose-600/25 border border-rose-400/30 transition-all duration-150 active:scale-95 shrink-0"
+        className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white bg-rose-600 hover:bg-rose-500 shadow-md shadow-rose-600/25 border border-rose-400/30 transition-all duration-150 active:scale-95 shrink-0"
       >
         <UserCheck size={14} />
         Acknowledge & Dispatch

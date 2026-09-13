@@ -88,7 +88,7 @@ export function VciInspectorPopover({ map }: { map: MapLibreMap | null }) {
       </div>
 
       {!metric ? (
-        <p className="text-xs text-slate-500 dark:text-slate-400">No metric for this zone yet</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">No metric for this zone yet</p>
       ) : (
         <>
           <div className="grid grid-cols-2 gap-2 mb-3">

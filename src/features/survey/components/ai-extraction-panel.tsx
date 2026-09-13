@@ -12,7 +12,7 @@ export function AiExtractionPanel() {
           AI Multi-Modal Extraction
         </span>
       </div>
-      <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed italic">{MOCK_SUMMARY}</p>
+      <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic">{MOCK_SUMMARY}</p>
     </div>
   );
 }

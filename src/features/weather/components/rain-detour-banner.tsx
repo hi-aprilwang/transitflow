@@ -29,7 +29,7 @@ export function RainDetourBanner() {
       <button
         type="button"
         onClick={() => setBannerAcked(true)}
-        className="px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/25 border border-amber-400/30 transition-all duration-150 active:scale-95 shrink-0"
+        className="px-4 py-1.5 rounded-xl text-sm font-bold text-white bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/25 border border-amber-400/30 transition-all duration-150 active:scale-95 shrink-0"
       >
         Acknowledge
       </button>

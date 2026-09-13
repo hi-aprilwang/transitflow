@@ -96,7 +96,7 @@ export function StationInfoCard({ station }: StationInfoCardProps) {
           </div>
           <div className={cn("text-2xl font-mono font-black tracking-tight", band === "RED" ? "text-rose-500" : band === "YELLOW" ? "text-amber-500" : "text-emerald-500")}>
             {worst?.vci_score ?? "—"}
-            <span className="text-xs font-normal text-slate-500 dark:text-slate-400 ml-0.5">/100</span>
+            <span className="text-sm font-normal text-slate-500 dark:text-slate-400 ml-0.5">/100</span>
           </div>
         </div>
         <div className="bg-slate-50 dark:bg-[#141b2b]/90 border border-slate-100 dark:border-white/[0.06] rounded-xl p-3">

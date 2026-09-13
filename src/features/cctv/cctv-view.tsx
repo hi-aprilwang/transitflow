@@ -99,7 +99,7 @@ export function CCTVView() {
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             aria-label="Filter by station"
-            className="ml-auto bg-slate-100 dark:bg-[#141b2b] text-xs rounded-xl px-3 py-1.5 border border-slate-200/60 dark:border-white/10"
+            className="ml-auto bg-slate-100 dark:bg-[#141b2b] text-sm rounded-xl px-3 py-1.5 border border-slate-200/60 dark:border-white/10"
           >
             <option value="ALL">ALL STATIONS</option>
             <option value="ST-DUK">Dukuh Atas</option>
@@ -110,7 +110,7 @@ export function CCTVView() {
             type="button"
             onClick={toggleAnonymize}
             aria-pressed={anonymize}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border border-slate-200/60 dark:border-white/10 bg-slate-100 dark:bg-[#141b2b] text-slate-700 dark:text-slate-300 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold border border-slate-200/60 dark:border-white/10 bg-slate-100 dark:bg-[#141b2b] text-slate-700 dark:text-slate-300 transition-colors"
           >
             {anonymize ? <EyeOff size={13} /> : <Eye size={13} />}
             {anonymize ? "Anonymized" : "Raw feed"}
@@ -125,7 +125,7 @@ export function CCTVView() {
                 <h2 className="text-sm font-bold text-slate-900 dark:text-white">
                   {focus.name}
                 </h2>
-                <button type="button" onClick={() => setFocus(null)} className="text-xs text-slate-400 hover:text-slate-600">
+                <button type="button" onClick={() => setFocus(null)} className="text-sm text-slate-400 hover:text-slate-600">
                   Close focus
                 </button>
               </div>

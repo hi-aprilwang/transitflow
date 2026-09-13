@@ -36,7 +36,7 @@ export function CongestionLevelSlider({
         </label>
         {currentLevel && (
           <span
-            className="font-mono text-xs font-bold tracking-wider uppercase"
+            className="font-mono text-sm font-bold tracking-wider uppercase"
             style={{ color: currentLevel.color }}
           >
             {currentLevel.label}

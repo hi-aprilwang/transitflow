@@ -109,7 +109,7 @@ export function AnalyticsPanel() {
       <button
         type="button"
         onClick={exportCsv}
-        className="mt-3 w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 transition-colors"
+        className="mt-3 w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 transition-colors"
       >
         <Download size={12} />
         Export CSV (Kemenhub)
