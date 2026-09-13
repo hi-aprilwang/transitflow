@@ -35,3 +35,7 @@ This repository follows the standard **Git Flow** branching model:
 - Use clear, descriptive commit messages (e.g., `feat(survey): add real-time form validation`).
 - Always open Pull Requests targeting `develop` for features and bugfixes.
 
+## Deployment Guidelines
+- **NEVER deploy to Vercel directly**: Do not run manual deployment commands like `vercel` or `vercel --prod` via CLI.
+- **Automated Webhook Deployments**: Always let the GitHub webhook trigger Vercel deployments automatically upon pushing commits to `main` (production) and `dev` / PRs (preview).
+
